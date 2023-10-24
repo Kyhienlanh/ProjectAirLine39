@@ -12,11 +12,12 @@
             <thead>
                 <tr>
                     <th>Flight Name</th>
-                    <th>Departure Time</th>
-                   
+                    <th>Departure Time</th>          
                     <th>From Airport</th>
                     <th>To Airport</th>
                     <th>Flight Date</th>
+                    <th>common in flight</th>
+                    <th>businessman in flight</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,10 +26,11 @@
                     <tr>
                         <td>@item.NameFlight</td>
                         <td>@item.departure_time</td>
-                        
                         <td>@item.fromAirport</td>
                         <td>@item.toAirport</td>
                         <td>@item.FlightDate</td>
+                        <td>@Html.ActionLink("Ticket", "Ticket", new { id = item.IdFlight })</td>
+                        <td>@Html.ActionLink("TicketVIP", "TicketVIP", new { id = item.IdFlight })</td>
                     </tr>
                 }
             </tbody>

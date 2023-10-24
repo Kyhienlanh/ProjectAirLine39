@@ -33,8 +33,30 @@ namespace ProjectAirLine39.Controllers
                        select s;
             return View(data);
         }
+      
+        public ActionResult Ticket(int id)
+        {
+            var data = from s in db.Tickets
+                       join f in db.TypeTickets on s.IdType equals f.IdType
+                       where s.IdFlight == id && f.IdType == 1
+                       select new TicketTypeViewModel { Ticket = s, TypeTicket = f };
 
+            return View(data.ToList());
+        }
+        public ActionResult TicketVIP(int id)
+        {
+            var data = from s in db.Tickets
+                       join f in db.TypeTickets on s.IdType equals f.IdType
+                       where s.IdFlight == id && f.IdType == 2
+                       select new TicketTypeViewModel { Ticket = s, TypeTicket = f };
 
+            return View(data.ToList());
+        }
+
+        public ActionResult FormOrder()
+        {
+            return View();
+        }
 
     }
 }
