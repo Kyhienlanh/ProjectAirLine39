@@ -37,7 +37,7 @@
                     <td>@item.Ticket.priceSale</td>
                     <td>@item.Ticket.status</td>
                     <td>@item.TypeTicket.NameType</td>
-                    <td><button class="buy-button">buy</button></td>
+                    <td>@Html.ActionLink("Buy", "FormOrder", new { id = item.Ticket.ticketID })</td>
 
                 </tr>
             }

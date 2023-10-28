@@ -52,11 +52,54 @@ namespace ProjectAirLine39.Controllers
 
             return View(data.ToList());
         }
-
-        public ActionResult FormOrder()
+      
+        public ActionResult Giave(int id)
         {
-            return View();
+            var data = from s in db.Tickets  
+                       join f in db.Flights on s.IdFlight equals f.IdFlight
+                       where s.ticketID == id
+                       select new TicketFlight { Ticket = s, Flight = f };
+            ViewBag.TicketID = id;
+            return PartialView(data.Single());
+
         }
+        [HttpGet]
+        public ActionResult FormOrder(int id)
+        {
+            ViewBag.ticketid = id;
+          
+            return PartialView();
+
+        }
+        [HttpPost]
+        public ActionResult FormOrder(FormCollection form)
+        {
+            string fullname = form["fullname"];
+            string birthdayValue = form["birthday"];
+            DateTime birthday;
+            DateTime.TryParse(birthdayValue, out birthday);
+            string Phone = form["Phone"];
+            string Email = form["Email"];
+            string CitizenIdentificationCard = form["CitizenIdentificationCard"];
+            int ticketID = Convert.ToInt32(form["ticketID"]); // Get the ticketID value from the form
+
+            UserCustomer_Ticket user = new UserCustomer_Ticket
+            {
+                Name = fullname,
+                birthday = birthday,
+                PhoneCustomer = Phone,
+                EmailCustomer = Email,
+                CitizenIdentificationCard = CitizenIdentificationCard,
+                ticketID = ticketID
+            };
+
+            db.UserCustomer_Ticket.Add(user);
+            db.SaveChanges();
+
+            // Redirect to a thank you or success page after saving the data
+            return RedirectToAction("ThankYou");
+        }
+
 
     }
 }
